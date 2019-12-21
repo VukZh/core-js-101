@@ -312,8 +312,37 @@ function getDigitalRoot(/* num */) {
  *   '{)' = false
  *   '{[(<{[]}>)]}' = true
  */
-function isBracketsBalanced(/* str */) {
-  throw new Error('Not implemented');
+function isBracketsBalanced(str) {
+  const bracketsArr = [];
+  str.split('').map((el) => {
+    if (el === '[') {
+      bracketsArr.push(el);
+    } else if (el === ']' && bracketsArr[bracketsArr.length - 1] === '[') {
+      bracketsArr.pop();
+    } else if (el === ']' && bracketsArr[bracketsArr.length - 1] !== '[') {
+      bracketsArr.push(el);
+    } else if (el === '(') {
+      bracketsArr.push(el);
+    } else if (el === ')' && bracketsArr[bracketsArr.length - 1] === '(') {
+      bracketsArr.pop();
+    } else if (el === ')' && bracketsArr[bracketsArr.length - 1] !== '(') {
+      bracketsArr.push(el);
+    } else if (el === '<') {
+      bracketsArr.push(el);
+    } else if (el === '>' && bracketsArr[bracketsArr.length - 1] === '<') {
+      bracketsArr.pop();
+    } else if (el === '>' && bracketsArr[bracketsArr.length - 1] !== '<') {
+      bracketsArr.push(el);
+    } else if (el === '{') {
+      bracketsArr.push(el);
+    } else if (el === '}' && bracketsArr[bracketsArr.length - 1] === '{') {
+      bracketsArr.pop();
+    } else if (el === '}' && bracketsArr[bracketsArr.length - 1] !== '{') {
+      bracketsArr.push(el);
+    }
+    return bracketsArr;
+  });
+  return bracketsArr.length === 0;
 }
 
 
@@ -354,8 +383,28 @@ function toNaryString(/* num, n */) {
  *   ['/web/assets/style.css', '/.bin/mocha',  '/read.me'] => '/'
  *   ['/web/favicon.ico', '/web-scripts/dump', '/webalizer/logs'] => '/'
  */
-function getCommonDirectoryPath(/* pathes */) {
-  throw new Error('Not implemented');
+function getCommonDirectoryPath(pathes) {
+  let res = '';
+  for (let i = 0; i < 100; i += 1) {
+    let flag = true;
+    const tmp = pathes[0][i];
+    pathes.map((el) => {
+      if (el[i] !== tmp) {
+        flag = false;
+      }
+      return tmp;
+    });
+    if (flag) {
+      res += tmp;
+    } else {
+      break;
+    }
+  }
+  let last = 1;
+  if (res.length !== 0 && res[res.length - 1] !== '/') {
+    last = res.lastIndexOf('/');
+  }
+  return res.slice(0, last + 1);
 }
 
 
