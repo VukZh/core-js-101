@@ -27,8 +27,16 @@
  *  21 => 'Fizz'
  *
  */
-function getFizzBuzz(/* num */) {
-  throw new Error('Not implemented');
+function getFizzBuzz(num) {
+  let res = num;
+  if (num % 3 === 0 && num % 5 === 0) {
+    res = 'FizzBuzz';
+  } else if (num % 3 === 0) {
+    res = 'Fizz';
+  } else if (num % 5 === 0) {
+    res = 'Buzz';
+  }
+  return res;
 }
 
 
@@ -43,8 +51,11 @@ function getFizzBuzz(/* num */) {
  *   5  => 120
  *   10 => 3628800
  */
-function getFactorial(/* n */) {
-  throw new Error('Not implemented');
+function getFactorial(n) {
+  if (n < 2) {
+    return 1;
+  }
+  return n * getFactorial(n - 1);
 }
 
 
@@ -197,8 +208,15 @@ function findFirstSingleChar(/* str */) {
  *   5, 3, true, true   => '[3, 5]'
  *
  */
-function getIntervalString(/* a, b, isStartIncluded, isEndIncluded */) {
-  throw new Error('Not implemented');
+function getIntervalString(a, b, isStartIncluded, isEndIncluded) {
+  const lBracket = (isStartIncluded) ? '[' : '(';
+  const rBracket = (isEndIncluded) ? ']' : ')';
+  let aa = a;
+  let bb = b;
+  if (a > b) {
+    [aa, bb] = [bb, aa];
+  }
+  return `${lBracket}${aa}, ${bb}${rBracket}`;
 }
 
 
@@ -214,8 +232,8 @@ function getIntervalString(/* a, b, isStartIncluded, isEndIncluded */) {
  * 'rotator' => 'rotator'
  * 'noon' => 'noon'
  */
-function reverseString(/* str */) {
-  throw new Error('Not implemented');
+function reverseString(str) {
+  return str.split('').reverse().join('');
 }
 
 
@@ -231,8 +249,8 @@ function reverseString(/* str */) {
  *   87354 => 45378
  *   34143 => 34143
  */
-function reverseInteger(/* num */) {
-  throw new Error('Not implemented');
+function reverseInteger(num) {
+  return num.toString().split('').reverse().join('');
 }
 
 
@@ -286,8 +304,14 @@ function isCreditCardNumber(ccn) {
  *   10000 ( 1+0+0+0+0 = 1 ) => 1
  *   165536 (1+6+5+5+3+6 = 26,  2+6 = 8) => 8
  */
-function getDigitalRoot(/* num */) {
-  throw new Error('Not implemented');
+function getDigitalRoot(num) {
+  let tmpArr = num.toString().split('');
+  let res;
+  while (tmpArr.length > 1) {
+    res = tmpArr.reduce((agg, el) => agg + Number(el), 0);
+    tmpArr = res.toString().split('');
+  }
+  return tmpArr[0];
 }
 
 
@@ -366,8 +390,8 @@ function isBracketsBalanced(str) {
  *    365, 4  => '11231'
  *    365, 10 => '365'
  */
-function toNaryString(/* num, n */) {
-  throw new Error('Not implemented');
+function toNaryString(num, n) {
+  return num.toString(n);
 }
 
 
@@ -461,8 +485,40 @@ function getMatrixProduct(/* m1, m2 */) {
  *    [    ,   ,    ]]
  *
  */
-function evaluateTicTacToePosition(/* position */) {
-  throw new Error('Not implemented');
+function evaluateTicTacToePosition(position) {
+  if ((position[0][0]) && (position[0][0] === position[0][1]
+    && position[0][0] === position[0][2])) {
+    return position[0][0];
+  }
+  if ((position[1][0]) && (position[1][0] === position[1][1]
+    && position[1][0] === position[1][2])) {
+    return position[1][0];
+  }
+  if ((position[2][0]) && (position[2][0] === position[2][1]
+    && position[2][0] === position[2][2])) {
+    return position[2][0];
+  }
+  if ((position[0][0]) && (position[0][0] === position[1][0]
+    && position[0][0] === position[2][0])) {
+    return position[0][0];
+  }
+  if ((position[0][1]) && (position[0][1] === position[1][1]
+    && position[0][1] === position[2][1])) {
+    return position[0][1];
+  }
+  if ((position[0][2]) && (position[0][2] === position[1][2]
+    && position[0][2] === position[2][2])) {
+    return position[0][2];
+  }
+  if ((position[0][0]) && (position[0][0] === position[1][1]
+    && position[0][0] === position[2][2])) {
+    return position[0][0];
+  }
+  if ((position[0][2]) && (position[0][2] === position[1][1]
+    && position[0][2] === position[2][0])) {
+    return position[0][2];
+  }
+  return undefined;
 }
 
 

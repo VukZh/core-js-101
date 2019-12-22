@@ -19,8 +19,40 @@
  *    'Tue, 26 Jan 2016 13:48:02 GMT' => Date()
  *    'Sun, 17 May 1998 03:00:00 GMT+01' => Date()
  */
-function parseDataFromRfc2822(/* value */) {
-  throw new Error('Not implemented');
+function parseDataFromRfc2822(value) {
+  const flagGMT = value.includes('GMT');
+  const parse1 = value.replace(',', '').replace('+', '').replace('GMT', '');
+  const valueArr = parse1.split(' ');
+  let year;
+  let mnt;
+  let dy;
+  let hr;
+  let min;
+  let sc;
+  let offs;
+  let wd;
+  let tm;
+  if (valueArr[0].length === 3) {
+    [wd, dy, mnt, year, tm, offs] = valueArr;
+    [hr, min, sc] = tm.split(':');
+  } else {
+    [mnt, dy, year, tm] = valueArr;
+    [hr, min, sc] = tm.split(':');
+  }
+  if (mnt === 'December') {
+    mnt = 11;
+  } else if (mnt === 'Jan') {
+    mnt = 0;
+  } else if (mnt === 'May') {
+    mnt = 4;
+  }
+  console.log(`y ${year} m ${mnt} d ${dy} h ${hr} m ${min} s ${sc} w ${wd} o ${offs}`);
+  if (offs) {
+    const o = Number(offs.substr(0, 2));
+    hr -= o;
+  }
+  return (flagGMT) ? new Date(Date.UTC(year, mnt, dy, hr, min, sc))
+    : new Date(year, mnt, dy, hr, min, sc);
 }
 
 /**
@@ -34,8 +66,18 @@ function parseDataFromRfc2822(/* value */) {
  *    '2016-01-19T16:07:37+00:00'    => Date()
  *    '2016-01-19T08:07:37Z' => Date()
  */
-function parseDataFromIso8601(/* value */) {
-  throw new Error('Not implemented');
+function parseDataFromIso8601(value) {
+  const parse1 = value.split('T');
+  const parse11 = parse1[0].split('-');
+  const parse12 = parse1[1].split(':');
+  const parse121 = parse12[2];
+  const year = parse11[0];
+  const mnt = parse11[1];
+  const dy = parse11[2];
+  const hr = parse12[0];
+  const min = parse12[1];
+  const sc = parse121.slice(0, 2);
+  return new Date(Date.UTC(year, mnt - 1, dy, hr, min, sc));
 }
 
 
@@ -53,8 +95,13 @@ function parseDataFromIso8601(/* value */) {
  *    Date(2012,1,1)    => true
  *    Date(2015,1,1)    => false
  */
-function isLeapYear(/* date */) {
-  throw new Error('Not implemented');
+function isLeapYear(date) {
+  const year = date.getUTCFullYear();
+  let res = false;
+  if (year % 400 === 0 || (year % 4 === 0 && year % 100 !== 0)) {
+    res = true;
+  }
+  return res;
 }
 
 
