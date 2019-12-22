@@ -39,6 +39,8 @@ function parseDataFromRfc2822(value) {
     [mnt, dy, year, tm] = valueArr;
     [hr, min, sc] = tm.split(':');
   }
+  wd = '';
+  mnt += wd;
   if (mnt === 'December') {
     mnt = 11;
   } else if (mnt === 'Jan') {
@@ -46,7 +48,7 @@ function parseDataFromRfc2822(value) {
   } else if (mnt === 'May') {
     mnt = 4;
   }
-  console.log(`y ${year} m ${mnt} d ${dy} h ${hr} m ${min} s ${sc} w ${wd} o ${offs}`);
+  // console.log(`y ${year} m ${mnt} d ${dy} h ${hr} m ${min} s ${sc} w ${wd} o ${offs}`);
   if (offs) {
     const o = Number(offs.substr(0, 2));
     hr -= o;
