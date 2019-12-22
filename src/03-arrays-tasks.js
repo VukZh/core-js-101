@@ -205,8 +205,13 @@ function getTail(arr, n) {
  *    +'20,21,22,23,24\n'
  *    +'30,31,32,33,34'
  */
-function toCsvText(/* arr */) {
-  throw new Error('Not implemented');
+function toCsvText(arr) {
+  let res = '';
+  arr.map((el) => {
+    res += `${el.toString()}\n`;
+    return res;
+  });
+  return res.substr(0, res.length - 1);
 }
 
 /**
@@ -452,8 +457,26 @@ function toStringList(arr) {
  *      { country: 'Russia',  city: 'Saint Petersburg' }
  *    ]
  */
-function sortCitiesArray(/* arr */) {
-  throw new Error('Not implemented');
+function sortCitiesArray(arr) {
+  const sorting = (a, b) => {
+    if (a.country > b.country) {
+      return 1;
+    }
+    if (a.country < b.country) {
+      return -1;
+    }
+    if (a.country === b.country) {
+      if (a.city > b.city) {
+        return 1;
+      }
+      if (a.city < b.city) {
+        return -1;
+      }
+      return 0;
+    }
+    return 0;
+  };
+  return arr.sort(sorting);
 }
 
 /**
